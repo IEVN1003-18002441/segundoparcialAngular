@@ -1,0 +1,70 @@
+<div class="bg-white shadow-xl flex flex-col md:flex-row w-full max-w-4xl p-8 border border-gray-300 min-h-[400px]">
+    
+    <div class="w-full md:w-1/2 md:pr-8 md:border-r-[3px] border-black mb-8 md:mb-0">
+        <div class="border-2 border-black p-4 mb-6">
+            <h2 class="text-center font-semibold mb-4 text-sm">Datos Personales</h2>
+            
+            <div class="mb-2 flex items-center">
+                <label class="w-24 text-sm font-semibold">Nombre</label>
+                <input type="text" [(ngModel)]="nombre" class="flex-1 border border-gray-400 px-1 text-sm outline-none focus:border-blue-500" placeholder="Nombre">
+            </div>
+            <div class="mb-2 flex items-center">
+                <label class="w-24 text-sm font-semibold">Apaterno</label>
+                <input type="text" [(ngModel)]="apaterno" class="flex-1 border border-gray-400 px-1 text-sm outline-none focus:border-blue-500" placeholder="Apaterno">
+            </div>
+            <div class="mb-4 flex items-center">
+                <label class="w-24 text-sm font-semibold">Amaterno</label>
+                <input type="text" [(ngModel)]="amaterno" class="flex-1 border border-gray-400 px-1 text-sm outline-none focus:border-blue-500" placeholder="Amaterno">
+            </div>
+
+            <h3 class="text-center font-semibold mb-2 text-sm">Fecha de nacimiento</h3>
+            <div class="flex justify-center space-x-4 mb-4 text-center">
+                <div>
+                    <div class="text-xs mb-1">Dia</div>
+                    <input type="number" [(ngModel)]="dia" class="w-14 border border-gray-400 text-center text-sm outline-none p-1 focus:border-blue-500" placeholder="22" min="1" max="31">
+                </div>
+                <div>
+                    <div class="text-xs mb-1">Mes</div>
+                    <input type="number" [(ngModel)]="mes" class="w-14 border border-gray-400 text-center text-sm outline-none p-1 focus:border-blue-500" placeholder="1" min="1" max="2" val>
+                </div>
+                <div>
+                    <div class="text-xs mb-1">Año</div>
+                    <input type="number" [(ngModel)]="ano" class="w-20 border border-gray-400 text-center text-sm outline-none p-1 focus:border-blue-500" placeholder="1990" min="1">
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <label class="block text-sm font-semibold mb-1">sexo</label>
+                <div class="flex flex-col space-y-1 ml-4 text-sm">
+                    <label class="flex items-center space-x-2 cursor-pointer">
+                        <input type="radio" name="sexo" value="Masculino" [(ngModel)]="sexo" class="w-4 h-4 cursor-pointer">
+                        <span>Masculino</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer">
+                        <input type="radio" name="sexo" value="Femenino" [(ngModel)]="sexo" class="w-4 h-4 cursor-pointer">
+                        <span>Femenino</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <button (click)="procesarDatos()" class="border-[3px] border-black px-8 py-1 font-bold text-lg hover:bg-gray-100 transition active:scale-95">
+            imprimir
+        </button>
+    </div>  
+    <div *ngIf="mostrarResultado" class="w-full md:w-1/2 md:pl-8 flex flex-col items-center justify-center text-center">
+        <h1 class="text-xl md:text-2xl mb-4">Hola <span class="italic font-bold">{{ resultadoNombre }}</span></h1>
+        
+        <p class="text-lg mb-4">Tienes <span class="font-bold">{{ resultadoEdad }}</span> años</p>
+        
+        <p class="text-lg mb-4">tu signo zodiacal</p>
+        
+        <div class="flex items-center justify-center space-x-3">
+            <p class="text-xl">Es <span class="font-bold">{{ resultadoSigno }}</span></p>
+            
+            <div class="bg-blue-600 rounded-full w-20 h-20 flex items-center justify-center shadow-lg overflow-hidden border-2 border-transparent">
+                <img [src]="resultadoImagen" [alt]="resultadoSigno" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </div>
+</div>
