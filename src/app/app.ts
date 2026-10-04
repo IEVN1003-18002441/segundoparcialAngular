@@ -1,13 +1,14 @@
   import { Component, signal, OnInit } from '@angular/core';
   import { RouterOutlet } from '@angular/router';
   import { initFlowbite } from 'flowbite';
-  import { Carousel } from "flowbite";
-  import type { CarouselItem, CarouselOptions, CarouselInterface } from "flowbite";
-  import { Zodiaco } from './zodiaco/zodiaco';
-
+ 
+  import { Zodiaco } from './formularios/zodiaco/zodiaco';
+import { Navbar } from './formularios/navbar/navbar';
+import { Distancia } from './formularios/distancia/distancia';
+import { ListaEscuela } from './escuela/lista-escuela/lista-escuela';
 
   @Component({
-    imports: [RouterOutlet, Zodiaco],
+    imports: [RouterOutlet, Zodiaco, Navbar, Distancia, ListaEscuela],
     selector: 'app-root',
     styleUrl: './app.css',
     templateUrl: './app.html',
