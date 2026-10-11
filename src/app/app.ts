@@ -6,9 +6,10 @@
 import { Navbar } from './formularios/navbar/navbar';
 import { Distancia } from './formularios/distancia/distancia';
 import { ListaEscuela } from './escuela/lista-escuela/lista-escuela';
+import { Cinepolis } from './escuela/cinepolis/cinepolis';
 
   @Component({
-    imports: [RouterOutlet, Zodiaco, Navbar, Distancia, ListaEscuela],
+    imports: [RouterOutlet, Zodiaco, Navbar, Distancia, ListaEscuela,Cinepolis],
     selector: 'app-root',
     styleUrl: './app.css',
     templateUrl: './app.html',

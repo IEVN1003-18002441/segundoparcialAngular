@@ -1,0 +1,7 @@
+  <button
+            type="button"
+            (click)="imprimirTicket()"
+            class="no-imprimir mt-6 w-full text-gray-900 bg-yellow-400 hover:bg-yellow-500 font-bold rounded-lg text-sm px-4 py-2 text-center transition"
+          >
+            Imprimir Ticket / Guardar PDF
+          </button>
