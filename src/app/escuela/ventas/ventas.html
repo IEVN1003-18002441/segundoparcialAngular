@@ -1,0 +1,156 @@
+<br><br><br>
+<div class="max-w-4xl mx-auto p-6 sm:p-8 bg-white rounded-lg shadow">
+
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">
+        Registro de Ventas de Boletas
+    </h1>
+
+    <form [formGroup]="formulario" (ngSubmit)="muestraVenta()">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+            <div>
+                <label for="nombreCliente" class="block mb-2 text-sm font-medium text-gray-900">
+                    Nombre Cliente
+                </label>
+                <input formControlName="nombreCliente" type="text" id="nombreCliente" name="nombreCliente" required
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Nombre del cliente">
+            </div>
+
+            <div>
+                <label for="compradores" class="block mb-2 text-sm font-medium text-gray-900">
+                    Cantidad de Compradores
+                </label>
+                <input formControlName="compradores" type="number" id="compradores" name="compradores" min="1"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            </div>
+
+            <div>
+                <label for="boletasCompradas" class="block mb-2 text-sm font-medium text-gray-900">
+                    Boletas Compradas
+                </label>
+                <input formControlName="boletasCompradas" type="number" id="boletasCompradas" name="boletasCompradas" min="0"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            </div>
+
+            <div>
+                <label for="tarjetaCineco" class="block mb-2 text-sm font-medium text-gray-900">
+                    Tarjeta Cineco
+                </label>
+                <select formControlName="tarjetaCineco" id="tarjetaCineco"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="descuento" class="block mb-2 text-sm font-medium text-gray-900">
+                    Descuento ($ / %)
+                </label>
+                <input formControlName="descuento" type="number" id="descuento" name="descuento"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            </div>
+
+            <div>
+                <label for="totalPagar" class="block mb-2 text-sm font-medium text-gray-900">
+                    Total a Pagar ($)
+                </label>
+                <input formControlName="totalPagar" type="number" id="totalPagar" name="totalPagar"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            </div>
+
+        </div>
+
+        <div class="mt-4">
+            <label for="mensajeError" class="block mb-2 text-sm font-medium text-gray-900">
+                Observaciones / Mensaje
+            </label>
+            <input formControlName="mensajeError" type="text" id="mensajeError" name="mensajeError"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="Observaciones o mensajes de error">
+        </div>
+
+        <div class="flex justify-end mt-5 gap-2">
+            <button type="submit" [disabled]="formulario.invalid"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed">
+                {{ indiceEdicion > -1 ? 'Actualizar' : 'Registrar' }}
+            </button>
+
+            <button (click)="obtenerVentas()" type="button"
+                class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                Cargar
+            </button>
+
+            <button (click)="limpiarCampos()" type="button"
+                class="text-gray-700 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5">
+                Limpiar
+            </button>
+        </div>
+
+    </form>
+
+    <!-- Tabla de Resultados -->
+    <div class="max-w-6xl mx-auto mt-8">
+
+        <h2 class="mb-4 text-2xl font-bold text-gray-900">
+            Lista de Ventas Registradas
+        </h2>
+
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                    <tr>
+                        <th scope="col" class="px-4 py-3">Cliente</th>
+                        <th scope="col" class="px-4 py-3">Compradores</th>
+                        <th scope="col" class="px-4 py-3">Boletas</th>
+                        <th scope="col" class="px-4 py-3">Tarjeta Cineco</th>
+                        <th scope="col" class="px-4 py-3">Descuento</th>
+                        <th scope="col" class="px-4 py-3">Total Pagar</th>
+                        <th scope="col" class="px-4 py-3">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let venta of ventas; let i = index" class="bg-white border-b border-gray-200 hover:bg-gray-50">
+                        <td class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            {{ venta.nombreCliente }}
+                        </td>
+                        <td class="px-4 py-4">{{ venta.compradores }}</td>
+                        <td class="px-4 py-4">{{ venta.boletasCompradas }}</td>
+                        <td class="px-4 py-4">{{ venta.tarjetaCineco }}</td>
+                        <td class="px-4 py-4">{{ venta.descuento }}</td>
+                        <td class="px-4 py-4 font-semibold text-gray-900">${{ venta.totalPagar }}</td>
+                        <td class="px-4 py-4">
+                            <div class="flex gap-2">
+                                <button type="button"
+                                    class="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded-lg hover:bg-green-700"
+                                    (click)="editarVenta(i)">
+                                    Editar
+                                </button>
+                                <button type="button"
+                                    class="px-3 py-1 text-xs font-medium text-white bg-red-600 rounded-lg hover:bg-red-700"
+                                    (click)="eliminarVenta(i)">
+                                    Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Resumen del Total General -->
+        <div *ngIf="ventas.length > 0" class="p-4 mt-4 text-right bg-blue-50 rounded-lg text-lg font-bold text-blue-900">
+            Total General Acumulado: ${{ totalGeneral }}
+        </div>
+
+        <!-- Mensaje cuando no existen ventas -->
+        <div *ngIf="ventas.length === 0" class="p-4 mt-4 text-sm text-gray-800 rounded-lg bg-gray-100" role="alert">
+            <span class="font-medium">Información:</span> No hay ventas registradas.
+        </div>
+
+    </div>
+
+</div>
