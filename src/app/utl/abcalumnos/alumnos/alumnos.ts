@@ -1,9 +1,8 @@
 import { AlumnosUTL } from '../alumnosUTL';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProyectoapiService } from '../alumnosapi.service';
-import { Router } from '@angular/router';
 import { AlumnoFilterPipe } from '../alumnos-filter.pipe';
 import { CommonModule } from '@angular/common';
 
@@ -26,7 +25,7 @@ export class Alumnos implements OnInit {
   constructor(
     public AlumnosUtl: ProyectoapiService, 
     private router: Router,
-    private cdr: ChangeDetectorRef // 1. Inyectamos el detector de cambios
+    private cdr: ChangeDetectorRef 
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +39,7 @@ export class Alumnos implements OnInit {
         this.dataSource = response.alumnos; 
         console.log('dataSource asignado:', this.dataSource);
         
-        this.cdr.detectChanges(); // 2. Forzamos a Angular a actualizar la vista de inmediato
+        this.cdr.detectChanges(); 
       },
       error: (error) => {
         console.error('Error al consultar el API', error);
@@ -50,4 +49,14 @@ export class Alumnos implements OnInit {
       }
     });
   }
+
+
+  editarAlumno(matricula: number | string): void {
+    this.router.navigate(['/utl/editar', matricula]);
+  }
+
+  eliminarAlumno(matricula: number | string): void {
+    this.router.navigate(['/utl/eliminar', matricula]);
+  }
+
 }

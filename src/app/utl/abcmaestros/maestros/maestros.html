@@ -20,7 +20,6 @@
           <p class="mt-2 text-sm text-gray-400 font-medium">Panel amplio de gestión y control académico de la institución.</p>
         </div>
 
-        <!-- Opcional: Elemento derecho decorativo o indicador -->
         <div class="hidden lg:flex items-center gap-3 bg-gray-900/80 border border-gray-800 px-4 py-2 rounded-xl">
           <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
           <span class="text-xs font-semibold text-gray-300 uppercase tracking-wider">Sistema Operativo</span>
@@ -30,9 +29,10 @@
       <!-- Body con mayor espacio -->
       <div class="p-6 md:p-10 space-y-8">
 
-        <!-- Filtro Extendido -->
-        <div class="grid grid-cols-1 gap-4 items-end">
-          <div>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+          
+          <!-- Buscador -->
+          <div class="w-full md:w-1/2">
             <label for="maestrosFilter" class="block mb-2 text-xs font-bold uppercase tracking-wider text-orange-400/90">Filtrar por nombre</label>
             <div class="relative group">
               <div class="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
@@ -46,9 +46,17 @@
                 placeholder="Escribe el nombre del maestro a buscar...">
             </div>
           </div>
+
+          <button [routerLink]="['/utl/agregar-maestro']" type="button" 
+            class="w-full md:w-auto text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 focus:ring-4 focus:outline-none focus:ring-green-900 font-bold rounded-xl text-sm px-6 py-3.5 shadow-lg shadow-green-900/30 transition-all transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Agregar Maestro
+          </button>
+
         </div>
 
-        <!-- Filtro activo badge -->
         <div *ngIf="listFilter" class="flex items-center gap-2 text-sm text-gray-400">
           <span>Filtro activo:</span>
           <span class="bg-gradient-to-r from-orange-950 to-amber-950 text-orange-300 text-xs font-semibold px-3.5 py-1.5 rounded-full border border-orange-700/50 shadow-sm flex items-center gap-2">
@@ -57,7 +65,6 @@
           </span>
         </div>
 
-        <!-- Tabla Amplia -->
         <div *ngIf="dataSource && dataSource.length > 0; else sinMaestros"
           class="relative overflow-x-auto rounded-2xl border border-gray-800/80 shadow-2xl bg-gray-900/40">
           <table class="w-full text-sm text-left text-gray-300">
@@ -88,14 +95,12 @@
                 </td>
                 <td class="px-8 py-5">
                   <div class="flex justify-center items-center gap-3">
-                    <!-- Botón Editar -->
                     <button (click)="editarMaestro(maestro.idmaestro)" type="button"
-                      class="text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 focus:ring-4 focus:outline-none focus:ring-blue-900 font-medium rounded-xl text-xs px-4 py-2.5 shadow-lg shadow-blue-900/30 transition-all transform active:scale-95">
+                      class="text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 focus:ring-4 focus:outline-none focus:ring-blue-900 font-medium rounded-xl text-xs px-4 py-2.5 shadow-lg shadow-blue-900/30 transition-all transform active:scale-95 cursor-pointer">
                       Editar
                     </button>
-                    <!-- Botón Eliminar -->
                     <button (click)="eliminarMaestro(maestro.idmaestro)" type="button"
-                      class="text-white bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 focus:ring-4 focus:outline-none focus:ring-red-900 font-medium rounded-xl text-xs px-4 py-2.5 shadow-lg shadow-red-900/30 transition-all transform active:scale-95">
+                      class="text-white bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 focus:ring-4 focus:outline-none focus:ring-red-900 font-medium rounded-xl text-xs px-4 py-2.5 shadow-lg shadow-red-900/30 transition-all transform active:scale-95 cursor-pointer">
                       Eliminar
                     </button>
                   </div>
@@ -105,7 +110,6 @@
           </table>
         </div>
 
-        <!-- Estado vacío -->
         <ng-template #sinMaestros>
           <div class="flex items-center p-6 text-sm text-amber-300 border border-amber-900/50 rounded-2xl bg-gradient-to-r from-amber-950/20 via-gray-900 to-gray-950 shadow-inner" role="alert">
             <svg class="shrink-0 inline w-5 h-5 me-3 text-amber-400" fill="currentColor" viewBox="0 0 20 20">

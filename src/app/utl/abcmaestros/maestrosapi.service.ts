@@ -13,7 +13,21 @@ export class ProyectoapiService {
         return this.http.get<any>('http://127.0.0.1:5000/api/maestros');
     }
 
-    agregarNuevoMaestro(datos: MaestrosUTL) {
-        return this.http.post('http://127.0.0.1:5000/api/maestros', datos);
+ agregarNuevoMaestro(datos: MaestrosUTL) {
+        return this.http.post('http://127.0.0.1:5000/api/maestros/', datos);
+    }
+
+
+    public getMaestro(id: string | number): Observable<any> {
+        console.log("ID Maestro: " + id);
+        return this.http.get<any>(`http://127.0.0.1:5000/api/maestros/${id}`);
+    }
+
+    modificarMaestro(id: number, datos: MaestrosUTL) {
+        return this.http.put('http://127.0.0.1:5000/api/maestros/' + id, datos);
+    }
+
+    public EliminaMaestro(id: number): Observable<MaestrosUTL> {
+        return this.http.delete<MaestrosUTL>('http://127.0.0.1:5000/api/maestros/' + id);
     }
 }
