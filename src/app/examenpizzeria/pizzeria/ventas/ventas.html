@@ -1,0 +1,149 @@
+<div class="w-full max-w-[92rem] mx-auto p-4 md:p-6">
+  <div class="relative p-[1px] bg-gradient-to-r from-orange-500/30 via-gray-700 to-amber-500/30 rounded-3xl shadow-2xl overflow-hidden">
+    <div class="bg-gray-950/95 backdrop-blur-2xl rounded-[23px] overflow-hidden">
+
+      <!-- ENCABEZADO PIZZERÍA -->
+      <div class="px-8 py-7 border-b border-gray-800/80 bg-gradient-to-r from-gray-900 via-gray-900/90 to-gray-950 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative">
+        <div class="absolute top-0 left-1/3 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-80"></div>
+        
+        <div>
+          <h1 class="text-3xl md:text-4xl font-black tracking-tight text-white flex items-center gap-3">
+            <span class="p-2.5 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl shadow-lg shadow-orange-500/25 text-white text-xl">
+              🍕
+            </span>
+            <span class="bg-gradient-to-r from-white via-gray-100 to-gray-400 bg-clip-text text-transparent">
+              Sistema <span class="bg-gradient-to-r from-orange-400 to-amber-300 bg-clip-text text-transparent">Pizzería</span>
+            </span>
+          </h1>
+          <p class="mt-2 text-sm text-gray-400 font-medium">Panel de gestión y control de pedidos y ventas acumuladas.</p>
+        </div>
+
+        <div class="hidden lg:flex flex-col gap-2">
+          <div class="flex items-center gap-3 bg-gray-900/80 border border-gray-800 px-4 py-2 rounded-xl">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-xs font-semibold text-gray-300 uppercase tracking-wider">Sistema Operativo</span>
+          </div>
+          <div *ngIf="totalAcumulado > 0" class="flex items-center gap-3 bg-gradient-to-r from-green-900/40 to-emerald-900/40 border border-green-800/50 px-4 py-2 rounded-xl">
+            <span class="text-sm font-bold text-green-400">Total Consultado: ${{ totalAcumulado.toFixed(2) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-6 md:p-10 space-y-8">
+
+        <!-- CONTROLES SUPERIORES (Busqueda, Filtros y Nuevo Pedido) -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+          
+          <!-- Búsqueda rápida por nombre (Usa el Pipe) -->
+          <div class="w-full md:w-1/3">
+            <label for="ventasFilter" class="block mb-2 text-xs font-bold uppercase tracking-wider text-orange-400/90">Buscar Cliente</label>
+            <div class="relative group">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
+                <svg class="w-5 h-5 text-gray-400 group-focus-within:text-orange-400 transition" aria-hidden="true" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                </svg>
+              </div>
+              <input id="ventasFilter" [(ngModel)]="listFilter" type="text"
+                class="block w-full ps-12 p-3.5 text-sm text-white bg-gray-900/90 border border-gray-800 rounded-xl placeholder-gray-500 focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition shadow-inner"
+                placeholder="Nombre del cliente...">
+            </div>
+          </div>
+
+          <!-- Filtros de Día / Mes exigidos por el examen -->
+          <div class="w-full md:w-auto flex flex-col md:flex-row gap-3 border-l border-gray-800 pl-4">
+             <div class="flex flex-col">
+               <label class="block mb-2 text-xs font-bold uppercase tracking-wider text-blue-400/90">Filtro por Día / Mes</label>
+               <div class="flex gap-2">
+                 <select #tipoFiltro class="p-3 text-sm text-white bg-gray-900/90 border border-gray-800 rounded-xl focus:ring-2 focus:ring-blue-500">
+                   <option value="dia">Día (Ej: Lunes)</option>
+                   <option value="mes">Mes (Ej: Enero)</option>
+                 </select>
+                 <input #valorFiltro type="text" placeholder="Ej: Lunes" class="p-3 w-32 text-sm text-white bg-gray-900/90 border border-gray-800 rounded-xl focus:ring-2 focus:ring-blue-500">
+                 <button (click)="buscarPorFiltro(tipoFiltro.value, valorFiltro.value)" class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl shadow-lg shadow-blue-900/30 transition text-sm font-bold">
+                   Filtrar
+                 </button>
+               </div>
+             </div>
+          </div>
+
+          <!-- Botón Nuevo Pedido -->
+          <button [routerLink]="['/pizzeria/agregar']" type="button" 
+            class="w-full md:w-auto text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 focus:ring-4 focus:outline-none focus:ring-green-900 font-bold rounded-xl text-sm px-6 py-3.5 shadow-lg shadow-green-900/30 transition-all transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Nuevo Pedido
+          </button>
+
+        </div>
+
+        <div *ngIf="listFilter" class="flex items-center gap-2 text-sm text-gray-400">
+          <span>Filtro activo:</span>
+          <span class="bg-gradient-to-r from-orange-950 to-amber-950 text-orange-300 text-xs font-semibold px-3.5 py-1.5 rounded-full border border-orange-700/50 shadow-sm flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
+            {{ listFilter }}
+          </span>
+        </div>
+
+        <!-- TABLA PRINCIPAL DE VENTAS -->
+        <div *ngIf="dataSource && dataSource.length > 0; else sinVentas"
+          class="relative overflow-x-auto rounded-2xl border border-gray-800/80 shadow-2xl bg-gray-900/40">
+          <table class="w-full text-sm text-left text-gray-300">
+            <thead class="text-xs uppercase tracking-wider bg-gray-900/90 text-gray-400 border-b border-gray-800">
+              <tr>
+                <th scope="col" class="px-6 py-4">Folio</th>
+                <th scope="col" class="px-6 py-4">Cliente</th>
+                <th scope="col" class="px-6 py-4">Dirección</th>
+                <th scope="col" class="px-6 py-4">Teléfono</th>
+                <th scope="col" class="px-6 py-4">Fecha Pedido</th>
+                <th scope="col" class="px-6 py-4 text-green-400">Total</th>
+                <th scope="col" class="px-6 py-4 text-center">Acciones</th>
+              </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-800/50">
+              <tr *ngFor="let venta of dataSource | ventasFilter:listFilter"
+                class="group bg-gray-900/10 hover:bg-gray-800/50 transition-all duration-200">
+                <td class="px-6 py-4 font-mono font-bold text-orange-400/90">#{{ venta.idventa }}</td>
+                <th scope="row" class="px-6 py-4 font-bold text-white whitespace-nowrap">
+                  {{ venta.nombre }}
+                </th>
+                <td class="px-6 py-4 text-gray-300">{{ venta.direccion }}</td>
+                <td class="px-6 py-4 text-gray-300">{{ venta.telefono }}</td>
+                <td>{{ venta.fecha_pedido | date:'EEEE, d MMM y, h:mm a' }}</td>
+                <td class="px-6 py-4 font-bold text-green-500">${{ venta.total_pedido.toFixed(2) }}</td>
+                <td class="px-6 py-4">
+                  <div class="flex justify-center items-center gap-3">
+                    
+                    <button (click)="verDetalleVenta(venta.idventa)" type="button"
+                      class="text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 focus:ring-4 focus:outline-none focus:ring-blue-900 font-medium rounded-xl text-xs px-4 py-2.5 shadow-lg shadow-blue-900/30 transition-all transform active:scale-95 cursor-pointer">
+                      Ver Detalle
+                    </button>
+                    
+                    <button (click)="eliminarVenta(venta.idventa)" type="button"
+                      class="text-white bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 focus:ring-4 focus:outline-none focus:ring-red-900 font-medium rounded-xl text-xs px-4 py-2.5 shadow-lg shadow-red-900/30 transition-all transform active:scale-95 cursor-pointer">
+                      Eliminar
+                    </button>
+
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <ng-template #sinVentas>
+          <div class="flex items-center p-6 text-sm text-amber-300 border border-amber-900/50 rounded-2xl bg-gradient-to-r from-amber-950/20 via-gray-900 to-gray-950 shadow-inner" role="alert">
+            <svg class="shrink-0 inline w-5 h-5 me-3 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+            </svg>
+            <div>
+              <span class="font-semibold">Sin registros.</span> No hay pedidos registrados que coincidan con la búsqueda.
+            </div>
+          </div>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div>

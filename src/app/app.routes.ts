@@ -26,6 +26,35 @@ export const routes: Routes = [
     loadComponent: () => import('./escuela/ventas/ventas').then((c) => c.Ventas),
     title: 'Ventas | SegundoparcialAngular',
   },
+  
+  // ================= PIZZERÍA (Módulo Nuevo) =================
+  {
+    path: 'pizzeria',
+    children: [
+      {
+        path: 'ventas',
+        loadComponent: () => import('./examenpizzeria/pizzeria/ventas/ventas').then((c) => c.Ventas),
+        title: 'Ventas Pizzería | SegundoparcialAngular',
+      },
+      {
+        path: 'agregar',
+        loadComponent: () => import('./examenpizzeria/pizzeria/agregar/agregar').then((c) => c.Agregar),
+        title: 'Registrar Pedido | SegundoparcialAngular',
+      },
+      {
+        path: 'editar/:idventa', 
+        loadComponent: () => import('./examenpizzeria/pizzeria/editar/editar').then((c) => c.Editar),
+        title: 'Detalle Venta | SegundoparcialAngular',
+      },
+      {
+        path: 'eliminar/:idventa',
+        loadComponent: () => import('./examenpizzeria/pizzeria/eliminar/eliminar').then((c) => c.Eliminar),
+        title: 'Eliminar Venta | SegundoparcialAngular',
+      }
+    ]
+  },
+  // ==========================================================
+
   {
     path: 'utl',
     children:[
@@ -50,7 +79,7 @@ export const routes: Routes = [
         loadComponent: () => import('./utl/abcalumnos/eliminar/eliminar').then((c) => c.Eliminar),
         title: 'Eliminar Alumno | SegundoparcialAngular',
       },
-     
+      
       // ================= MAESTROS =================
       {
         path: 'maestros',
@@ -58,17 +87,17 @@ export const routes: Routes = [
         title: 'Maestros UTL | SegundoparcialAngular',
       },
       {
-        path: 'agregar-maestro', // <-- RUTA CORREGIDA
+        path: 'agregar-maestro', 
         loadComponent: () => import('./utl/abcmaestros/agregar/agregar').then((c) => c.Agregar),
         title: 'Agregar Maestro | SegundoparcialAngular',
       },
       {
-        path: 'editar-maestro/:idmaestro', // <-- RUTA CORREGIDA
+        path: 'editar-maestro/:idmaestro', 
         loadComponent: () => import('./utl/abcmaestros/editar/editar').then((c) => c.Editar),
         title: 'Editar Maestro | SegundoparcialAngular',
       },
       {
-        path: 'eliminar-maestro/:idmaestro', // <-- RUTA CORREGIDA
+        path: 'eliminar-maestro/:idmaestro',
         loadComponent: () => import('./utl/abcmaestros/eliminar/eliminar').then((c) => c.Eliminar),
         title: 'Eliminar Maestro | SegundoparcialAngular',
       }
